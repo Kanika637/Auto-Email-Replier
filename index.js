@@ -17,7 +17,7 @@ const {
   oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 
 // repliedUsers takes care of how many users have already 
-// been replied and also there is no deouble reply to any mail
+// been replied and also there is no double reply to any mail
 
   const repliedUsers = new Set();
 
@@ -56,11 +56,11 @@ const {
             (header) => header.name === "Subject"
           );
 
-          //who sends email extracted
+         
           const From = from.value;
-          //who gets email extracted
+  
           const toEmail = toHeader.value;
-          //subject of unread email
+    
           const subject = Subject.value;
           console.log("Email Came From", From);
           console.log("to Email", toEmail);
@@ -71,7 +71,7 @@ const {
             continue;
           }
 
-          // Next step is to send replies to Emails that have no prior replies
+          // Next step is to send replies to Emails that have no previous replies
 
           // Check if the email has any replies.
           const thread = await gmail.users.threads.get({
@@ -79,7 +79,7 @@ const {
             id: message.threadId,
           });
   
-          //isolated the email into threads
+          
           const replies = thread.data.messages.slice(1);
   
           if (replies.length === 0) {
@@ -103,7 +103,7 @@ const {
   
             console.log("Sent reply to email:", From);
 
-            //Add the user to replied users set
+      
             repliedUsers.add(From);
           }
         }
@@ -155,7 +155,7 @@ const {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
   
-  //Setting Interval and calling main function in every 45-120 seconds
+
   setInterval(checkEmailsAndSendReplies, getRandomInterval(45, 120) * 1000);
   
   
